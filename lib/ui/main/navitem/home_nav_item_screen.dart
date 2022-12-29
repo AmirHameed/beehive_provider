@@ -1,4 +1,3 @@
-import 'package:beehive_provider/extension/context_extension.dart';
 import 'package:beehive_provider/ui/main/main_screen_bloc.dart';
 import 'package:beehive_provider/ui/main/main_screen_state.dart';
 import 'package:beehive_provider/ui/main/navitem/order_screen.dart';
@@ -16,13 +15,13 @@ class HomeNavigationItemScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = context.screenSize;
     final bloc = context.read<MainScreenBloc>();
-
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 20),
         child: Row(
+
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             GestureDetector(
               onTap: () {
@@ -34,12 +33,10 @@ class HomeNavigationItemScreen extends StatelessWidget {
                 height: 30,
               ),
             ),
-            const Spacer(),
             const Text('Hello!',
                 style:
                     TextStyle(fontSize: 16, fontFamily: Constants.cairoBold)),
-            const SizedBox(width: 5),
-            const Icon(Icons.menu, color: Constants.colorOnSecondary, size: 28),
+            const SizedBox(),
           ],
         ),
       ),
@@ -48,21 +45,7 @@ class HomeNavigationItemScreen extends StatelessWidget {
         color: Constants.colorTextLight2,
         height: 1,
       ),
-      Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: const [
-            Text(AppText.LATEST_ORDER,
-                style: TextStyle(fontSize: 14, fontFamily: Constants.cairoBold)),
-            Text(AppText.VIEW_ALL,
-                style: TextStyle(
-                    fontSize: 12,
-                    fontFamily: Constants.cairoMedium,
-                    color: Color(0xff6D6D6D))),
-          ],
-        ),
-      ),
+
       Container(
         margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
@@ -90,6 +73,16 @@ class HomeNavigationItemScreen extends StatelessWidget {
           ],
         ),
       ),
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: const [
+            Text(AppText.LATEST_ORDER,
+                style: TextStyle(fontSize: 14, fontFamily: Constants.cairoBold))
+          ],
+        ),
+      ),
       Expanded(
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
@@ -101,12 +94,12 @@ class HomeNavigationItemScreen extends StatelessWidget {
                   GestureDetector(
                       onTap: () => Navigator.pushNamed(
                           context, OrderDetailScreen.route,
-                          arguments: [false, false, true]),
+                          arguments: true),
                       child: const SingleOrderItemWidget(title: AppText.NEW)),
                   GestureDetector(
                       onTap: () => Navigator.pushNamed(
                           context, OrderDetailScreen.route,
-                          arguments: [false, false, true]),
+                          arguments: true),
                       child: const SingleOrderItemWidget(title: AppText.NEW)),
                 ],
               )

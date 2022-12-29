@@ -2,19 +2,7 @@ import 'package:beehive_provider/ui/order-detail/order_detail_screen_bloc_state.
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class OrderDetailScreenBloc extends Cubit<OrderDetailScreenBlocState> {
-  final  isOrderDetail;
-  final  isProviderOffer;
-  final  isDeliveryPayment;
+  final  bool isPriceOffer;
 
-  OrderDetailScreenBloc({this.isOrderDetail = false,this.isProviderOffer=false,this.isDeliveryPayment=false})
-      : super(OrderDetailScreenBlocState.initial(isDeliveryPayment: isDeliveryPayment));
-
-
-  void updateDeliveryAddress(bool value) {
-    emit(state.copyWith(isDeliveryAddress: value));
-  }
-
-  void updatePaymentMethod(bool value,int selectedValue) {
-    emit(state.copyWith(isPaymentMethod: value,paymentMethodSelected: selectedValue));
-  }
+  OrderDetailScreenBloc({required this.isPriceOffer}) : super(const OrderDetailScreenBlocState.initial(isDeliveryPayment: true));
 }

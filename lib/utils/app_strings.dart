@@ -10,13 +10,19 @@ abstract class AppText {
   static const String DONT_HAVE_AN_ACCOUNT = 'Don’t have an account? ';
   static const String HAVE_AN_ACCOUNT = 'Have an account? ';
   static const String FORGOT_PASSWORD = 'Forgot password?';
+  static const String FORGOT_PASSWORD_ = 'Forgot password';
+  static const String CREATE_NEW_PASSWORD = 'Create New Password';
+  static const String YOUR_NEW_PASSWORD_MUST_BE_DIFFIRENT = 'Your new password must be different from your old password';
   static const String CREATE_ACCOUNT = 'Create account';
   static const String OTP = 'OTP';
-  static const String PLEASE_ENTER_THE_OTP_CODE = 'Please enter the OTP code';
+  static const String PLEASE_ENTER_THE_OTP_CODE = 'We sent you a code on your phone,please enter that code below to verify your phone number';
+  static const String PLEASE_ENTER_THE_FORGOT_PASSWORD_CODE = 'Please enter the phone number below, we will send you OTP to reset your password ';
   static const String ENTER_CODE = 'Enter code';
   static const String CONFIRM = 'Confirm';
-  static const String NOT_RECEIVED = 'Not received? ';
+  static const String VERIFY = 'Verify';
+  static const String NOT_RECEIVED = 'Did not received OTP  ? ';
   static const String RESEND = 'Resend';
+  static const String RESET = 'Reset';
   static const String FULL_NAME = 'Full Name';
   static const String PASSWORD = 'Password';
   static const String CURRENT_LOCATION = 'Current Location';
@@ -30,7 +36,16 @@ abstract class AppText {
   static const String PROFILE = 'Profile';
   static const String MY_INFORMATION = 'My information';
   static const String MY_REVIEWS = 'My Reviews';
+  static const String BANK_DETAILS = 'Bank Details';
+  static const String BANK_NAME = 'Bank Name';
+  static const String ACCOUNT_TITLE = 'Account Title';
+  static const String ACCOUNT_NUMBER = 'Account Number';
+  static const String IBAN = 'IBAN';
+  static const String CONTACT_VIA_EMAIL = 'Contact Via Email';
+  static const String CONTACT_VIA_WHATSAPP = 'Contact Via Whatsapp';
+
   static const String LOGOUT = 'Logout';
+  static const String REPORT = 'Report';
   static const String CHANGE_FULL_NAME = 'Change full name';
   static const String CHANGE_EMAIL = 'Change email';
   static const String CHANGE_PASSWORD = 'Change password';
@@ -38,8 +53,8 @@ abstract class AppText {
   static const String CURRENT_PASSWORD = 'Current password';
   static const String DELIVERY_TIME = 'Delivery time';
   static const String DELIVERY_COST = 'Delivery cost';
-  static const String NEW_PASSWORD = 'New password';
-  static const String CONFIRM_NEW_PASSWORD = 'Confirm new password';
+  static const String NEW_PASSWORD = 'New Password';
+  static const String CONFIRM_NEW_PASSWORD = 'Confirm New Password';
   static const String SETTINGS = 'Settings';
   static const String SEND = 'Send';
   static const String LANGUAGE = 'Language';
@@ -47,11 +62,13 @@ abstract class AppText {
   static const String ARABIC = 'Arabic';
   static const String NOTIFICATIONS = 'Notifications';
   static const String CHANGE_LANGUAGE = 'Change language';
+  static const String CHANGE_MOBILE_NUMBER = 'Change mobile number';
   static const String MY_ADDRESS = 'My addresses';
   static const String ADD_NEW = 'Add new';
   static const String CHOOSE_DELIVERY_ADDRESS = 'Choose delivery address';
   static const String EDIT_DELIVERY_ADDRESS = 'Edit delivery address';
   static const String PHONE_NUMBER = 'Phone Number';
+  static const String PHONE = 'Phone';
   static const String ENTER = 'Enter';
   static const String PAYMENT_METHODS = 'Payment methods';
   static const String PAYMENT_METHOD = 'Payment method';
@@ -67,6 +84,7 @@ abstract class AppText {
   static const String NEW = 'New';
   static const String NEW_APPROVED = 'New-approved';
   static const String CHAT = 'Chat';
+  static const String ORDER_STATUS = 'Order status';
   static const String ARRIVED = 'Arrived';
   static const String ORDER_DETAILS = 'Order details';
   static const String REVIEW = 'Review';
@@ -80,6 +98,7 @@ abstract class AppText {
   static const String DETAILS = 'Details';
   static const String CONTINUE = 'Continue';
   static const String DELIVERY_ADDRESS = 'Delivery address';
+  static const String PICKUP_ADDRESS = 'Pickup address';
   static const String CANCEL_ORDER = 'Cancel Order';
   static const String ARE_YOU_SURE = 'Are you sure?';
   static const String YES = 'Yes';
@@ -93,11 +112,12 @@ abstract class AppText {
   static const String ORDERS = 'Orders';
   static const String LATEST_ORDER = 'Latest orders';
   static const String VIEW_ALL = 'View all';
+  static const String VERIFICATION= 'Verification';
   static const String CONTACT_USER = 'Contact user';
-  static const String THE_DRIVER_IS_HEADING_TO_THE_PICKUP_LOCATION = 'The driver is heading to the pickup location';
-  static const String THE_DRIVER_REACED_AT_THE_TOP_PICKUP_LOCATION = 'The driver reached at the pickup location';
-  static const String THE_DRIVER_HAS_PICKED_YOUR_ORDER_AND_ON_HIS_WAY_TO_YOU = 'The driver has picked your order and on his way to you';
-  static const String THE_DRIVER_HAS_ARRIVED_AT_THE_DELIVERY_POINT = 'The provider has arrived at the delivery point';
+  static const String THE_DRIVER_IS_HEADING_TO_THE_PICKUP_LOCATION = 'Heading to the pickup location';
+  static const String THE_DRIVER_REACED_AT_THE_TOP_PICKUP_LOCATION = 'Reached at the pickup location';
+  static const String THE_DRIVER_HAS_PICKED_YOUR_ORDER_AND_ON_HIS_WAY_TO_YOU = 'Order picked and on the way to delivery location';
+  static const String THE_DRIVER_HAS_ARRIVED_AT_THE_DELIVERY_POINT = 'Reached at delivery location and delivered order';
   static const String CHOOSE_THE_OFFER = 'Choose the offer';
   static const String CANCEL_THE_ORDER = 'Cancel the order';
   static const String PROVIDERS_OFFERS = 'Providers offers';
@@ -120,9 +140,9 @@ abstract class AppText {
   static const String PRICE_OFFER = 'Price offer';
   static const String DISCARD = 'Discard';
   static const String WALLET = 'WALLET';
-  static const String STORE_STATUS = 'store status(open/closed)';
+  static const String STORE_STATUS = 'Availability Status(open/closed)';
   static const String WE_WILL_CONTACT_YOU_SOON = 'We will contact you soon';
+  static const String SELECT_REASON = 'Select Reason';
+  static const String EXPLAIN_YOUR_PROBLEM_HERE = 'Explain your problem here';
   static const String YOU_WILL_RECEIVED_AN_EMAIL_WITHIN_24 = 'You will receive an email within 24 hours\nexplaining the status of your request.\nThank you';
-
-
 }

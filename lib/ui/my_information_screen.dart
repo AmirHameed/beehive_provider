@@ -1,4 +1,5 @@
 import 'package:beehive_provider/extension/context_extension.dart';
+import 'package:beehive_provider/ui/auth/login_screen.dart';
 import 'package:beehive_provider/ui/common/app_bar.dart';
 import 'package:beehive_provider/ui/common/app_button.dart';
 import 'package:beehive_provider/utils/app_strings.dart';
@@ -52,7 +53,10 @@ class MyInformationScreen extends StatelessWidget {
                   showChangeInformationBottomSheet(context,AppText.EMAIL,AppText.CHANGE_EMAIL,'Amir@gmail.com');
                 }),
             _SingleProfileItemNavigation(
-                title: AppText.MOBILE_NUMBER, name: '123456789', onTap: () {}),
+                title: AppText.MOBILE_NUMBER, name: '123456789', onTap: () {
+              showChangeInformationBottomSheet(context,AppText.MOBILE_NUMBER,AppText.CHANGE_MOBILE_NUMBER,'123456789');
+
+            }),
             _SingleProfileItemNavigation(
                 title: 'Password',
                 name: '************',
@@ -63,6 +67,7 @@ class MyInformationScreen extends StatelessWidget {
             _SingleProfileItemNavigation(
                 title: AppText.VEHICLE_TYPE,
                 name: 'viat',
+                isChange: false,
                 onTap: () {
                   // showChangeInformationBottomSheet(context,AppText.EMAIL,AppText.CHANGE_EMAIL,'Amir@gmail.com');
                 }),
@@ -70,6 +75,7 @@ class MyInformationScreen extends StatelessWidget {
             _SingleProfileItemNavigation(
                 title: AppText.VEHICLE_PLATE_NUMBER,
                 name: '1234567',
+                isChange: false,
                 onTap: () {
                   // showChangeInformationBottomSheet(context,AppText.EMAIL,AppText.CHANGE_EMAIL,'Amir@gmail.com');
                 }),
@@ -77,18 +83,21 @@ class MyInformationScreen extends StatelessWidget {
             _SingleProfileItemNavigation(
                 title: AppText.DRIVING_LICENSE,
                 name: 'Photo.pdf',
+                isChange: false,
                 onTap: () {
                   // showChangeInformationBottomSheet(context,AppText.EMAIL,AppText.CHANGE_EMAIL,'Amir@gmail.com');
                 }),
             _SingleProfileItemNavigation(
                 title: AppText.VEHICLE_PHOTO,
                 name: 'Photo.pdf',
+                isChange: false,
                 onTap: () {
                   // showChangeInformationBottomSheet(context,AppText.EMAIL,AppText.CHANGE_EMAIL,'Amir@gmail.com');
                 }),
             _SingleProfileItemNavigation(
                 title: AppText.PROVIDER_MEDICAL_CHECKUP,
                 name: 'Photo.pdf',
+                isChange: false,
                 onTap: () {
                   // showChangeInformationBottomSheet(context,AppText.EMAIL,AppText.CHANGE_EMAIL,'Amir@gmail.com');
                 }),
@@ -96,16 +105,19 @@ class MyInformationScreen extends StatelessWidget {
 
 
             const SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text(AppText.LOGOUT,
-                    style: TextStyle(
-                        fontSize: 14,
-                        color: Constants.colorOnSecondary,
-                        fontFamily: Constants.cairoSemibold)),
-                Image.asset('assets/logout@2x.png', width: 25)
-              ],
+            GestureDetector(
+              onTap: ()=>Navigator.pushNamedAndRemoveUntil(context, LoginScreen.route, (route) => false),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(AppText.LOGOUT,
+                      style: TextStyle(
+                          fontSize: 14,
+                          color: Constants.colorOnSecondary,
+                          fontFamily: Constants.cairoSemibold)),
+                  Image.asset('assets/logout@2x.png', width: 25)
+                ],
+              ),
             ),
             const SizedBox(height: 20)
           ]),
@@ -118,10 +130,11 @@ class MyInformationScreen extends StatelessWidget {
 class _SingleProfileItemNavigation extends StatelessWidget {
   final String title;
   final String name;
+  final bool isChange;
   final VoidCallback onTap;
 
   const _SingleProfileItemNavigation(
-      {required this.title, required this.name, required this.onTap});
+      {required this.title, required this.name, required this.onTap,this.isChange=true});
 
   @override
   Widget build(BuildContext context) {
@@ -147,14 +160,14 @@ class _SingleProfileItemNavigation extends StatelessWidget {
                       fontSize: 14, color: Constants.colorTextLight, fontFamily: Constants.cairoRegular)),
             ],
           ),
-          GestureDetector(
+          isChange?GestureDetector(
             onTap: onTap,
             child: const Text('Change',
                 style: TextStyle(
                     fontSize: 14,
                     color: Constants.colorPrimary,
                     fontFamily: Constants.cairoRegular)),
-          ),
+          ):const SizedBox(),
         ],
       ),
     );
@@ -170,6 +183,8 @@ showChangeInformationBottomSheet(
     context: context,
     enableDrag: true,
     isDismissible: true,
+    isScrollControlled: true,
+    constraints: BoxConstraints(minHeight: size.height/2.9,maxHeight: size.height/2.9),
     backgroundColor: Colors.white,
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.only(

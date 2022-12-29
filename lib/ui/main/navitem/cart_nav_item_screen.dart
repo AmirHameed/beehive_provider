@@ -96,7 +96,7 @@ class _CartNavigationItemScreenState extends State<CartNavigationItemScreen> {
                               ..showDeleteDialogCart();
                           },
                           backgroundColor: Colors.transparent,
-                          icon: Icons.delete,
+                          icon:  const Icon(Icons.delete),
                           label: '',
                           padding: const EdgeInsets.only(top: 10),
                           foregroundColor: Colors.red,
@@ -297,7 +297,7 @@ class _CartNavigationItemScreenState extends State<CartNavigationItemScreen> {
                               onClick: () {
                                 Navigator.pushNamed(
                                     context, OrderDetailScreen.route,
-                                    arguments: [true, false, false]);
+                                    arguments: true);
                               },
                               text: AppText.CONTINUE,
                               textColor: Constants.colorOnSurface,

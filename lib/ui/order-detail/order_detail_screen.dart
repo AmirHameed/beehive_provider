@@ -1,5 +1,4 @@
 import 'package:beehive_provider/extension/context_extension.dart';
-import 'package:beehive_provider/ui/common/app_button.dart';
 import 'package:beehive_provider/ui/common/title_with_price_item.dart';
 import 'package:beehive_provider/ui/order-detail/order_detail_screen_bloc.dart';
 import 'package:beehive_provider/utils/app_strings.dart';
@@ -7,6 +6,7 @@ import 'package:beehive_provider/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../helper/dialog_helper.dart';
+import '../main/navitem/order_screen.dart';
 
 class OrderDetailScreen extends StatelessWidget {
   static const String route = 'order_detail_screen_route';
@@ -20,7 +20,7 @@ class OrderDetailScreen extends StatelessWidget {
     final dialogHelper = DialogHelper.instance();
 
     return Scaffold(
-      bottomNavigationBar: Material(
+      bottomNavigationBar:bloc.isPriceOffer? Material(
         elevation: 6,
         color: Colors.white,
         child: Container(
@@ -73,7 +73,7 @@ class OrderDetailScreen extends StatelessWidget {
             ],
           ),
         ),
-      ),
+      ):const SizedBox(),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -278,6 +278,8 @@ class OrderDetailScreen extends StatelessWidget {
                   ],
                 ),
               ),
+
+              const SizedBox(height: 5),
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 20),
                 decoration: BoxDecoration(
@@ -333,14 +335,15 @@ class OrderDetailScreen extends StatelessWidget {
                   ],
                 ),
               ),
+
               Container(
-                margin:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                margin: const EdgeInsets.only(left: 20,right: 20,top: 10,bottom: 5),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
                     border:
-                        Border.all(width: 1, color: Constants.colorTextLight3)),
+                    Border.all(width: 1, color: Constants.colorTextLight3)),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
                       padding: const EdgeInsets.symmetric(
@@ -348,7 +351,7 @@ class OrderDetailScreen extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: const [
-                          Text(AppText.PAYMENT_METHOD,
+                          Text(AppText.PICKUP_ADDRESS,
                               style: TextStyle(
                                   fontSize: 14,
                                   color: Constants.colorOnSecondary,
@@ -363,43 +366,24 @@ class OrderDetailScreen extends StatelessWidget {
                       height: 1,
                       color: Constants.colorTextLight3,
                     ),
+                    const SizedBox(height: 10),
                     Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 5, horizontal: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: const [
-                              Text('**** **** **** 6544',
-                                  textAlign: TextAlign.end,
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      color: Constants.colorOnSecondary,
-                                      fontFamily: Constants.cairoSemibold)),
-                              SizedBox(height: 20),
-                              Text('12/23',
-                                  textAlign: TextAlign.end,
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      color: Constants.colorOnSecondary,
-                                      fontFamily: Constants.cairoSemibold))
-                            ],
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Image.asset('assets/visa.png',
-                                  width: 70, height: 40),
-                              const SizedBox(height: 10),
-                              const Text('Expired',
-                                  textAlign: TextAlign.end,
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      color: Constants.colorOnSecondary,
-                                      fontFamily: Constants.cairoSemibold))
-                            ],
+                          Image.asset('assets/map.png',
+                              width: size.width,
+                              height: 200,
+                              fit: BoxFit.cover),
+                          const Text('King Faisal Street, Riyadh, Saudi Arabia',
+                              style: TextStyle(
+                                  fontFamily: Constants.cairoRegular)),
+                          const Text(
+                            '+966567112233',
+                            style:
+                            TextStyle(fontFamily: Constants.cairoRegular),
                           ),
                         ],
                       ),
@@ -407,6 +391,7 @@ class OrderDetailScreen extends StatelessWidget {
                   ],
                 ),
               ),
+
               const Align(
                 alignment: Alignment.topLeft,
                 child: Padding(
@@ -482,118 +467,3 @@ class OrderDetailScreen extends StatelessWidget {
     );
   }
 }
-
-showPriceOfferBottomSheet(BuildContext context) {
-  final _formkey = GlobalKey<FormState>();
-  final size = context.screenSize;
-
-  return showModalBottomSheet(
-    context: context,
-    enableDrag: true,
-    isDismissible: true,
-    backgroundColor: Colors.white,
-    shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(12.0), topRight: Radius.circular(12.0)),
-    ),
-    builder: (context) {
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          const SizedBox(
-            height: 10,
-          ),
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              color: Constants.colorTextLight2,
-            ),
-            width: 40,
-            height: 6,
-          ),
-          const Text(AppText.PRICE_OFFER,
-              style: TextStyle(
-                  fontSize: 16,
-                  fontFamily: Constants.cairoBold,
-                  color: Constants.colorOnSecondary)),
-          Form(
-            key: _formkey,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(AppText.DELIVERY_TIME,
-                      style: TextStyle(
-                          fontSize: 16, color: Constants.colorOnSecondary, fontFamily: Constants.cairoSemibold)),
-                  Container(
-                      height: 48,
-                      alignment: Alignment.center,
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      margin: const EdgeInsets.only(
-                          bottom: 20, top: 10, left: 0, right: 0),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8.0),
-                          border: Border.all(color: Constants.colorTextLight)),
-                      child: TextFormField(
-                          controller: TextEditingController(),
-                          onChanged: (String? value) {},
-                          keyboardType: TextInputType.text,
-                          style: const TextStyle(
-                              color: Constants.colorOnSecondary, fontSize: 14),
-                          decoration: const InputDecoration(
-                              border: InputBorder.none,
-                              focusedBorder: InputBorder.none,
-                              hintText: 'Enter',
-                              hintStyle: TextStyle(
-                                  color: Constants.colorTextLight,
-                                  fontFamily: Constants.cairoRegular,
-                                  fontSize: 13)))),
-                  const Text(AppText.DELIVERY_COST,
-                      style: TextStyle(
-                          fontSize: 16, color: Constants.colorOnSecondary, fontFamily: Constants.cairoSemibold)),
-                  Container(
-                      height: 48,
-                      alignment: Alignment.center,
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      margin: const EdgeInsets.only(
-                          bottom: 20, top: 10, left: 0, right: 0),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8.0),
-                          border: Border.all(color: Constants.colorTextLight)),
-                      child: TextFormField(
-                          controller: TextEditingController(),
-                          onChanged: (String? value) {},
-                          keyboardType: TextInputType.text,
-                          style: const TextStyle(
-                              color: Constants.colorOnSecondary, fontSize: 14),
-                          decoration: const InputDecoration(
-                              border: InputBorder.none,
-                              focusedBorder: InputBorder.none,
-                              hintText: 'Enter',
-                              hintStyle: TextStyle(
-                                  color: Constants.colorTextLight,
-                                  fontFamily: Constants.cairoRegular,
-                                  fontSize: 13)))),
-                  SizedBox(
-                      height: 48,
-                      width: size.width,
-                      child: AppButton(
-                          onClick: () {
-                            FocusScope.of(context).unfocus();
-                          },
-                          text: AppText.SEND,
-                          textColor: Constants.colorOnSurface,
-                          borderRadius: 8.0,
-                          fontSize: 16,
-                          color: Constants.colorPrimary)),
-                ],
-              ),
-            ),
-          ),
-        ],
-      );
-    },
-  );
-}
-

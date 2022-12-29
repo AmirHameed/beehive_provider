@@ -5,7 +5,6 @@ import 'package:beehive_provider/ui/common/app_button.dart';
 import 'package:beehive_provider/ui/main/main_screen_bloc.dart';
 import 'package:beehive_provider/ui/main/main_screen_state.dart';
 import 'package:beehive_provider/ui/order-detail/order_detail_screen.dart';
-import 'package:beehive_provider/ui/order_tracking_screen.dart';
 import 'package:beehive_provider/utils/app_strings.dart';
 import 'package:beehive_provider/utils/constants.dart';
 import 'package:flutter/material.dart';
@@ -27,8 +26,12 @@ class OrderNavigationItemScreen extends StatelessWidget {
     return Column(
       children: [
         const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          child: AppBarItem(title: AppText.ORDERS),
+          padding: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+          child: Text(AppText.ORDERS,
+              style: TextStyle(
+                  color: Constants.colorOnSecondary,
+                  fontSize: 16,
+                  fontFamily: Constants.cairoBold)),
         ),
         const Padding(
           padding: EdgeInsets.only(bottom: 10),
@@ -73,7 +76,7 @@ class OrderNavigationItemScreen extends StatelessWidget {
                 ),
                 Expanded(
                   child: GestureDetector(
-                    onTap: () {},
+                    onTap: () =>bloc.updateOrderIndex(1),
                     child: Container(
                       alignment: Alignment.center,
                       height: 60,
@@ -94,7 +97,7 @@ class OrderNavigationItemScreen extends StatelessWidget {
                 ),
                 Expanded(
                   child: GestureDetector(
-                    onTap: () {},
+                    onTap: () =>bloc.updateOrderIndex(2),
                     child: Container(
                       alignment: Alignment.center,
                       height: 60,
@@ -128,12 +131,12 @@ class OrderNavigationItemScreen extends StatelessWidget {
                         GestureDetector(
                             onTap: () => Navigator.pushNamed(
                                 context, OrderDetailScreen.route,
-                                arguments: [false, false, true]),
+                                arguments: true),
                             child: const SingleOrderItemWidget(title: AppText.NEW)),
                         GestureDetector(
                             onTap: () => Navigator.pushNamed(
                                 context, OrderDetailScreen.route,
-                                arguments: [false, false, true]),
+                                arguments:false),
                             child: const SingleOrderItemWidget(
                                 title: AppText.NEW_APPROVED)),
                       ],
@@ -144,14 +147,14 @@ class OrderNavigationItemScreen extends StatelessWidget {
                             GestureDetector(
                               onTap: () => Navigator.pushNamed(
                                   context, OrderDetailScreen.route,
-                                  arguments: [false, false, true]),
+                                  arguments:  false),
                               child: const SingleOrderItemWidget(
                                   title: AppText.COMPLETED),
                             ),
                             GestureDetector(
                               onTap: () => Navigator.pushNamed(
                                   context, OrderDetailScreen.route,
-                                  arguments: [false, false, true]),
+                                  arguments:false),
                               child: const SingleOrderItemWidget(
                                   title: AppText.COMPLETED),
                             ),
@@ -162,11 +165,11 @@ class OrderNavigationItemScreen extends StatelessWidget {
                             GestureDetector(
                                 onTap: ()=>Navigator.pushNamed(
                                     context, OrderDetailScreen.route,
-                                    arguments: [false, false, true]),child: const SingleOrderItemWidget(title: AppText.CANCELLED)),
+                                    arguments: false),child: const SingleOrderItemWidget(title: AppText.CANCELLED)),
                             GestureDetector(
                                 onTap: ()=>Navigator.pushNamed(
                                     context, OrderDetailScreen.route,
-                                    arguments: [false, false, true]),child: const SingleOrderItemWidget(title: AppText.CANCELLED)),
+                                    arguments: false),child: const SingleOrderItemWidget(title: AppText.CANCELLED)),
                           ],
                         )),
         )
@@ -245,21 +248,35 @@ class SingleOrderItemWidget extends StatelessWidget {
                   firstText: AppText.DISCARD,
                   lastButton: () => showPriceOfferBottomSheet(context),
                   lastText: AppText.PRICE_OFFER)
-              : title == AppText.COMPLETED
-                  ? OrderButtonWidget(
-                      lastButton: () => Navigator.pushNamed(
-                          context, OrderDetailScreen.route,
-                          arguments: [true, false, false]),
-                      lastText: AppText.RE_ORDER,
-                      firstButton: () => dialogHelper
-                        ..injectContext(context)
-                        ..showWriteReviewDialog((text) {}),
-                      firstText: AppText.REVIEW):
+              : title == AppText.COMPLETED?
+          GestureDetector(
+            onTap: () =>Navigator.pushNamed(
+                context, OrderDetailScreen.route,
+                arguments: false),
+            child: Container(
+              margin: const EdgeInsets.symmetric(
+                  horizontal: 10, vertical: 10),
+              alignment: Alignment.center,
+              height: 48,
+              width: size.width,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(
+                      width: 1, color: Constants.colorPrimary),
+                  color: Constants.colorPrimary),
+              child: const Text(AppText.ORDER_STATUS,
+                  style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.white,
+                      fontFamily: Constants.cairoRegular)),
+            ),
+          )
+
+              :
           title == AppText.NEW_APPROVED
               ? GestureDetector(
             onTap: () => Navigator.pushNamed(
-                context, ChatScreen.route,
-                arguments: [true, false, false]),
+                context, ChatScreen.route),
             child: Container(
               margin: const EdgeInsets.symmetric(
                   horizontal: 10, vertical: 10),
@@ -281,7 +298,7 @@ class SingleOrderItemWidget extends StatelessWidget {
                   : GestureDetector(
                       onTap: () => Navigator.pushNamed(
                           context, OrderDetailScreen.route,
-                          arguments: [true, false, false]),
+                          arguments: false),
                       child: Container(
                         margin: const EdgeInsets.symmetric(
                             horizontal: 10, vertical: 10),
@@ -293,7 +310,7 @@ class SingleOrderItemWidget extends StatelessWidget {
                             border: Border.all(
                                 width: 1, color: Constants.colorPrimary),
                             color: Constants.colorPrimary),
-                        child: const Text(AppText.RE_ORDER,
+                        child: const Text(AppText.CANCELLED,
                             style: TextStyle(
                                 fontSize: 14,
                                 color: Colors.white,
@@ -424,6 +441,8 @@ showPriceOfferBottomSheet(BuildContext context) {
   return showModalBottomSheet(
     context: context,
     enableDrag: true,
+    isScrollControlled: true,
+    constraints: BoxConstraints(minHeight: size.height/2.2,maxHeight: size.height/2.2),
     isDismissible: true,
     backgroundColor: Colors.white,
     shape: const RoundedRectangleBorder(
@@ -478,6 +497,11 @@ showPriceOfferBottomSheet(BuildContext context) {
                           decoration: const InputDecoration(
                               border: InputBorder.none,
                               focusedBorder: InputBorder.none,
+                              suffixIconConstraints: BoxConstraints(minHeight: 20),
+                              suffixIcon: Text('Min',style: TextStyle(
+                                  color: Constants.colorOnSecondary,
+                                  fontFamily: Constants.cairoMedium,
+                                  fontSize: 14)),
                               hintText: 'Enter',
                               hintStyle: TextStyle(
                                   color: Constants.colorTextLight,
@@ -503,6 +527,11 @@ showPriceOfferBottomSheet(BuildContext context) {
                               color: Constants.colorOnSecondary, fontSize: 14),
                           decoration: const InputDecoration(
                               border: InputBorder.none,
+                              suffixIconConstraints: BoxConstraints(minHeight: 20),
+                              suffixIcon: Text('\$',style: TextStyle(
+                                  color: Constants.colorOnSecondary,
+                                  fontFamily: Constants.cairoMedium,
+                                  fontSize: 14)),
                               focusedBorder: InputBorder.none,
                               hintText: 'Enter',
                               hintStyle: TextStyle(

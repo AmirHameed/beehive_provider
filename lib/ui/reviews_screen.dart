@@ -4,9 +4,8 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class ReviewsScreen extends StatelessWidget {
   static const String route = 'reviews_screen';
-  final bool isRestaurant;
 
-  const ReviewsScreen({this.isRestaurant=false});
+  const ReviewsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +20,8 @@ class ReviewsScreen extends StatelessWidget {
                 GestureDetector(
                     onTap: ()=>Navigator.pop(context),
                     child: const Icon(Icons.arrow_back_ios,size: 16,color: Constants.colorOnSecondary,)),
-                 Text(isRestaurant?'Hamada Restaurant Reviews': 'Amir Hameed Reviews',
-                    style: const TextStyle(
+                 const Text('My Reviews',
+                    style: TextStyle(
                         color: Constants.colorOnSecondary,
                         fontSize: 16,
                         fontFamily: Constants.cairoBold)),
@@ -71,13 +70,13 @@ class ReviewsScreen extends StatelessWidget {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               mainAxisSize: MainAxisSize.max,
-                              children:  [
-                                Text(isRestaurant?'Mohammad Mehar':'Amir',
-                                    style: const TextStyle(
+                              children:  const [
+                                Text('Mohammad Mehar',
+                                    style: TextStyle(
                                         fontSize: 14,
                                         color: Constants.colorOnSecondary,
                                         fontFamily: Constants.cairoBold)),
-                                const Text('12/3/2022',
+                                Text('12/3/2022',
                                     style: TextStyle(
                                         fontSize: 12,
                                         color: Constants.colorTextLight,

@@ -24,88 +24,90 @@ class ChatScreen extends StatelessWidget {
         },
         child: SafeArea(
           child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  GestureDetector(
-                      onTap: () => Navigator.pop(context, true),
-                      child: const Icon(
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                GestureDetector(
+                    onTap: () => Navigator.pop(context, true),
+                    child: const Padding(
+                      padding: EdgeInsets.all(10),
+                      child: Icon(
                         Icons.arrow_back_ios,
-                        size: 16,
+                        size: 22,
                         color: Constants.colorOnSecondary,
-                      )),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 10, horizontal: 10),
-                      child: Row(
-                        children:  [
-                          Image.asset('assets/profile_image.png', width: 40, height: 40),
-
-                          const SizedBox(width: 8),
-                          const Text('Amir',
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  color: Constants.colorOnSecondary,
-                                  fontFamily: Constants.cairoBold)),
-                          const SizedBox(width: 4),
-
-                          const Text('4.5',
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  color: Constants.colorOnSecondary,
-                                  fontFamily: Constants.cairoRegular)),
-                          const SizedBox(width: 3),
-                          Image.asset('assets/full.png', width: 15, height: 15),
-                          const Spacer(),
-
-
-                        PopupMenuButton<int>(
-                          color: Constants.colorOnSurface,
-                          tooltip: '',
-                          offset: const Offset(0,30),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10)),
-                          elevation: 10,
-                          icon: const Icon(
-                            Icons.more_horiz,
-                          ),
-                          itemBuilder: (context) => [
-                            const PopupMenuItem<int>(
-                                value: 0,
-                                child: Text(
-                                  'Cancel order',
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      fontFamily: Constants.cairoMedium,
-                                      color: Constants.colorOnSecondary),
-                                )),
-                            const PopupMenuItem<int>(
-                                value: 0,
-                                child: Text(
-                                  'Report',
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      fontFamily: Constants.cairoMedium,
-                                      color: Constants.colorOnSecondary),
-                                )),
-                          ],
-                          onSelected: (index) {
-                            if(index==0){
-                              dialogHelper
-                                ..injectContext(context)
-                                ..showDeleteDialog();
-                            }
-                          },
-                        )
-                        ],
                       ),
+                    )),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 10,bottom: 10,right: 10),
+                    child: Row(
+                      children:  [
+                        Image.asset('assets/profile_image.png', width: 40, height: 40),
+
+                        const SizedBox(width: 8),
+                        const Text('Amir',
+                            style: TextStyle(
+                                fontSize: 14,
+                                color: Constants.colorOnSecondary,
+                                fontFamily: Constants.cairoBold)),
+                        const SizedBox(width: 4),
+
+                        const Text('4.5',
+                            style: TextStyle(
+                                fontSize: 14,
+                                color: Constants.colorOnSecondary,
+                                fontFamily: Constants.cairoRegular)),
+                        const SizedBox(width: 3),
+                        Image.asset('assets/full.png', width: 15, height: 15),
+                        const Spacer(),
+
+
+                      PopupMenuButton<int>(
+                        color: Constants.colorOnSurface,
+                        tooltip: '',
+                        offset: const Offset(0,30),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10)),
+                        elevation: 10,
+                        icon: const Icon(
+                          Icons.more_horiz,
+                        ),
+                        itemBuilder: (context) => [
+                          const PopupMenuItem<int>(
+                              value: 0,
+                              child: Text(
+                                'Cancel order',
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    fontFamily: Constants.cairoMedium,
+                                    color: Constants.colorOnSecondary),
+                              )),
+                          const PopupMenuItem<int>(
+                              value: 1,
+                              child: Text(
+                                'Report',
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    fontFamily: Constants.cairoMedium,
+                                    color: Constants.colorOnSecondary),
+                              )),
+                        ],
+                        onSelected: (index) {
+                          if(index==0){
+                            dialogHelper
+                              ..injectContext(context)
+                              ..showDeleteDialog();
+                          }
+                          if(index==1){
+                            showReportBottomSheet(context);
+                          }
+                        },
+                      )
+                      ],
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
             const Divider(
               thickness: 1,
@@ -267,3 +269,157 @@ class ChatScreen extends StatelessWidget {
     );
   }
 }
+showReportBottomSheet(BuildContext context) {
+  final _formkey = GlobalKey<FormState>();
+  final size = context.screenSize;
+  TextEditingController reasonController=TextEditingController();
+
+  return showModalBottomSheet(
+    context: context,
+    enableDrag: true,
+    isDismissible: true,
+    isScrollControlled: true,
+    constraints: BoxConstraints(minHeight: size.height/1.9,maxHeight: size.height/1.9),
+    backgroundColor: Colors.white,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(8.0), topRight: Radius.circular(8.0)),
+    ),
+    builder: (context) {
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          const SizedBox(
+            height: 10,
+          ),
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              color: Constants.colorTextLight2,
+            ),
+            width: 40,
+            height: 6,
+          ),
+          const Text(AppText.REPORT,
+              style: TextStyle(
+                  fontSize: 16,
+                  fontFamily: Constants.cairoSemibold,
+                  color: Constants.colorOnSecondary)),
+          Form(
+            key: _formkey,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(AppText.SELECT_REASON,
+                      style: TextStyle(
+                          fontSize: 14, color: Constants.colorOnSecondary, fontFamily: Constants.cairoRegular)),
+
+                  PopupMenuButton(
+                      elevation: 20,
+                      constraints: BoxConstraints(maxWidth: size.width - 20),
+                      enabled: true,
+                      position: PopupMenuPosition.over,
+                      shape: const RoundedRectangleBorder(
+                          borderRadius:
+                          BorderRadius.all(Radius.circular(10))),
+                      offset: const Offset(0, 30),
+                      tooltip: '',
+                      splashRadius: 0,
+                      onSelected: (value) {
+                        context.unfocus();
+                        reasonController.text = value.toString();
+                      },
+                      itemBuilder: (context) {
+                        context.unfocus();
+                        return ['Report A','Report B','Report C']
+                            .map((String choice) => PopupMenuItem(
+                            textStyle: const TextStyle(color: Constants.colorSurface),
+                            value: choice,
+                            child: SizedBox(
+                                width: size.width,
+                                child: Text(choice))))
+                            .toList();
+                      },
+                      child: Container(
+                          height: 48,
+                          alignment: Alignment.center,
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          margin: const EdgeInsets.only(
+                              bottom: 20, top: 10, left: 0, right: 0),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8.0),
+                              border: Border.all(color: Constants.colorTextLight)),
+                          child: TextFormField(
+                              enabled: false,
+                              readOnly: true,
+                              textInputAction: TextInputAction.next,
+                              onTap: () => context.unfocus(),
+                              controller: reasonController,
+                              style: const TextStyle(
+                                  color: Constants.colorOnSecondary,
+                                  fontFamily: Constants.cairoRegular,
+                                  fontSize: 14),
+                              decoration: const InputDecoration(
+                                  border: InputBorder.none,
+                                  hintText: AppText.SELECT_REASON,
+                                  suffixIcon: Padding(
+                                    padding: EdgeInsets.symmetric(horizontal: 5),
+                                    child: Icon(Icons.keyboard_arrow_down_rounded,
+                                        size: 22, color: Constants.colorTextLight),
+                                  ),
+                                  focusedBorder: InputBorder.none,
+                                  hintStyle: TextStyle(
+                                      color: Constants.colorSecondary,
+                                      fontFamily: Constants.cairoRegular,
+                                      fontSize: 13))))),
+
+                  const Text(AppText.DETAILS,
+                      style: TextStyle(
+                          fontSize: 14, color: Constants.colorOnSecondary, fontFamily: Constants.cairoRegular)),
+                  Container(
+                      height: 110,
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      margin: const EdgeInsets.only(bottom: 20, top: 10, left: 0, right: 0),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8.0),
+                          border: Border.all(color: Constants.colorTextLight)),
+                      child: TextFormField(
+                          controller: TextEditingController(),
+                          maxLines: 5,
+                          onChanged: (String? value) {},
+                          keyboardType: TextInputType.text,
+                          style: const TextStyle(
+                              color: Constants.colorOnSecondary, fontSize: 14),
+                          decoration: const InputDecoration(
+                              border: InputBorder.none,
+                              focusedBorder: InputBorder.none,
+                              hintText: AppText.EXPLAIN_YOUR_PROBLEM_HERE,
+                              hintStyle: TextStyle(
+                                  color: Constants.colorTextLight,
+                                  fontFamily: Constants.cairoRegular,
+                                  fontSize: 13)))),
+                  SizedBox(
+                      height: 48,
+                      width: size.width,
+                      child: AppButton(
+                          onClick: () {
+                            FocusScope.of(context).unfocus();
+                          },
+                          text: AppText.Submit,
+                          textColor: Constants.colorOnSurface,
+                          borderRadius: 8.0,
+                          fontSize: 16,
+                          color: Constants.colorPrimary)),
+                ],
+              ),
+            ),
+          ),
+        ],
+      );
+    },
+  );
+}
+

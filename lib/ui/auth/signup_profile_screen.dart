@@ -1,4 +1,5 @@
 import 'package:beehive_provider/extension/context_extension.dart';
+import 'package:beehive_provider/ui/auth/otp_screen.dart';
 import 'package:beehive_provider/ui/auth/signup_profile_screen_bloc.dart';
 import 'package:beehive_provider/ui/common/app_bar.dart';
 import 'package:beehive_provider/ui/common/app_button.dart';
@@ -22,211 +23,284 @@ class SignUpProfileScreen extends StatelessWidget {
 
     return Scaffold(
         body: SafeArea(
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-          const AppBarItem(title: AppText.CREATE_ACCOUNT),
-          Align(
-            alignment: Alignment.center,
-            child: Stack(
-                children: [
-                  Image.asset('assets/profile_image.png', width: 90, height: 90),
-                  Positioned(
-                      bottom: 0,
-                      right: 0,
-                      child: GestureDetector(
-                          onTap: () {
-                            ImagePicker().pickImage(source: ImageSource.gallery);
-                          },
-                          child: Image.asset('assets/add_photo.png',
-                              width: 30, height: 30)))
-                ],
-            ),
-          ),
-
-          const Text(AppText.FULL_NAME,
-                style: TextStyle(
-                    fontSize: 16,
-                    color: Constants.colorOnSecondary,
-                    fontFamily: Constants.cairoSemibold)),
-          const AppTextField(
-                hint: AppText.ENTER,
-                textInputType: TextInputType.text,
-                isError: false),
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
               const SizedBox(height: 10),
-
-          const Text(AppText.EMAIL,
-                style: TextStyle(
-                    fontSize: 16,
-                    color: Constants.colorOnSecondary,
-                    fontFamily: Constants.cairoSemibold)),
-          const AppTextField(
-                hint: AppText.ENTER,
-                textInputType: TextInputType.text,
-                isError: false),
-          const SizedBox(height: 10),
-
-          const Text(AppText.MOBILE_NUMBER,
-                style: TextStyle(
-                    fontSize: 16,
-                    color: Constants.colorOnSecondary,
-                    fontFamily: Constants.cairoSemibold)),
-          const AppTextField(
-                hint: AppText.ENTER,
-                textInputType: TextInputType.text,
-                isError: false),
-          const SizedBox(height: 10),
-
-          const Text(AppText.PASSWORD,
-                style: TextStyle(
-                    fontSize: 16,
-                    color: Constants.colorOnSecondary,
-                    fontFamily: Constants.cairoSemibold)),
-          const AppTextField(
-                hint: AppText.ENTER,
-                textInputType: TextInputType.text,
-                isError: false),
-          const SizedBox(height: 10),
-
-          const Text(AppText.VEHICLE_TYPE,
-                style: TextStyle(
-                    fontSize: 16,
-                    color: Constants.colorOnSecondary,
-                    fontFamily: Constants.cairoSemibold)),
-          const AppTextField(
-                hint: AppText.CHOOSE,
-                suffixIcon: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 5),
-                  child: Icon(Icons.keyboard_arrow_down_rounded,size: 22,color: Constants.colorTextLight),
+              const AppBarItem(title: AppText.CREATE_ACCOUNT),
+              Align(
+                alignment: Alignment.center,
+                child: Stack(
+                  children: [
+                    Image.asset('assets/profile_image.png',
+                        width: 90, height: 90),
+                    Positioned(
+                        bottom: 0,
+                        right: 0,
+                        child: GestureDetector(
+                            onTap: () {
+                              ImagePicker()
+                                  .pickImage(source: ImageSource.gallery);
+                            },
+                            child: Image.asset('assets/add_photo.png',
+                                width: 30, height: 30)))
+                  ],
                 ),
-                textInputType: TextInputType.text,
-                isError: false),
-          const SizedBox(height: 10),
-
-          const Text(AppText.VEHICLE_PLATE_NUMBER,
-                style: TextStyle(
-                    fontSize: 16,
-                    color: Constants.colorOnSecondary,
-                    fontFamily: Constants.cairoSemibold)),
-          const AppTextField(
-                hint: AppText.ENTER,
-                textInputType: TextInputType.text,
-                isError: false),
-          const SizedBox(height: 10),
-
-          const Text(AppText.ID_PHOTO,
-                style: TextStyle(
-                    fontSize: 16,
-                    color: Constants.colorOnSecondary,
-                    fontFamily: Constants.cairoSemibold)),
-           AppTextField(
-                hint: 'Upload photo',
-                suffixIcon: GestureDetector(
-                  onTap: ()=>ImagePicker().pickImage(source: ImageSource.gallery),
-                  child: Container(
-                    alignment: Alignment.center,
-                    height: 50,
-                    width: 100,
-                    decoration: BoxDecoration(
-                      color: Constants.colorLightPink,
-                      borderRadius: BorderRadius.circular(15)
+              ),
+              const Text(AppText.FULL_NAME,
+                  style: TextStyle(
+                      fontSize: 16,
+                      color: Constants.colorOnSecondary,
+                      fontFamily: Constants.cairoSemibold)),
+              const AppTextField(
+                  hint: AppText.ENTER,
+                  textInputType: TextInputType.text,
+                  isError: false),
+              const SizedBox(height: 10),
+              const Text(AppText.EMAIL,
+                  style: TextStyle(
+                      fontSize: 16,
+                      color: Constants.colorOnSecondary,
+                      fontFamily: Constants.cairoSemibold)),
+              const AppTextField(
+                  hint: AppText.ENTER,
+                  textInputType: TextInputType.text,
+                  isError: false),
+              const SizedBox(height: 10),
+              const Text(AppText.MOBILE_NUMBER,
+                  style: TextStyle(
+                      fontSize: 16,
+                      color: Constants.colorOnSecondary,
+                      fontFamily: Constants.cairoSemibold)),
+              const AppTextField(
+                  hint: AppText.ENTER,
+                  textInputType: TextInputType.text,
+                  isError: false),
+              const SizedBox(height: 10),
+              const Text(AppText.PASSWORD,
+                  style: TextStyle(
+                      fontSize: 16,
+                      color: Constants.colorOnSecondary,
+                      fontFamily: Constants.cairoSemibold)),
+              BlocBuilder<SignUpProfileScreenBloc, bool>(
+                builder: (_, isPasswordObscure) => AppTextField(
+                    hint: AppText.ENTER,
+                    suffixIcon: Padding(
+                      padding: const EdgeInsets.only(right: 10),
+                      child: GestureDetector(
+                        onTap: () => bloc.togglePasswordObscure(),
+                        child: Icon(
+                            isPasswordObscure
+                                ? Icons.visibility_outlined
+                                : Icons.visibility_off_outlined,
+                            size: 22,
+                            color: Constants.colorTextLight),
+                      ),
                     ),
-
-                    child: const Text(AppText.UPLOAD,style: TextStyle(fontSize: 14,color: Constants.colorPrimary,fontFamily: Constants.cairoRegular)),
-                  ),
-                ),
-                textInputType: TextInputType.text,
-                isError: false),
-          const SizedBox(height: 10),
-
-          const Text(AppText.DRIVING_LICENSE,
-              style: TextStyle(
-                  fontSize: 16,
-                  color: Constants.colorOnSecondary,
-                  fontFamily: Constants.cairoSemibold)),
-          AppTextField(
-              hint: 'Upload photo',
-              suffixIcon: GestureDetector(
-                onTap: ()=>ImagePicker().pickImage(source: ImageSource.gallery),
-                child: Container(
-                  alignment: Alignment.center,
-                  height: 50,
-                  width: 100,
-                  decoration: BoxDecoration(
-                      color: Constants.colorLightPink,
-                      borderRadius: BorderRadius.circular(15)
-                  ),
-
-                  child: const Text(AppText.UPLOAD,style: TextStyle(fontSize: 14,color: Constants.colorPrimary,fontFamily: Constants.cairoRegular)),
-                ),
+                    isObscure: isPasswordObscure,
+                    textInputType: TextInputType.visiblePassword,
+                    isError: false),
               ),
-              textInputType: TextInputType.text,
-              isError: false),
-          const SizedBox(height: 10),
+              const SizedBox(height: 10),
+              const Text(AppText.VEHICLE_TYPE,
+                  style: TextStyle(
+                      fontSize: 16,
+                      color: Constants.colorOnSecondary,
+                      fontFamily: Constants.cairoSemibold)),
+              PopupMenuButton(
+                  elevation: 20,
+                  constraints: BoxConstraints(maxWidth: size.width - 40),
+                  enabled: true,
+                  position: PopupMenuPosition.over,
+                  shape: const RoundedRectangleBorder(
+                      borderRadius:
+                      BorderRadius.all(Radius.circular(10))),
+                  offset: const Offset(0, 30),
+                  tooltip: '',
+                  splashRadius: 0,
+                  onSelected: (value) {
+                    context.unfocus();
+                    bloc.vehicleTextController.text = value.toString();
+                  },
+                  itemBuilder: (context) {
+                    context.unfocus();
+                    return ['Car','Bike','Bus','Van']
+                        .map((String choice) => PopupMenuItem(
+                            textStyle: const TextStyle(color: Constants.colorSurface),
+                            value: choice,
+                            child: SizedBox(
+                                width: size.width,
+                                child: Text(choice))))
+                        .toList();
+                  },
+                  child: Container(
+                      height: 60,
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.only(left: 15),
+                      margin: const EdgeInsets.only(bottom: 10, top: 10),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        border: Border.all(color: Constants.colorTextLight3),
+                      ),
+                      child: TextFormField(
+                          enabled: false,
+                          readOnly: true,
+                          textInputAction: TextInputAction.next,
+                          onTap: () => context.unfocus(),
+                          controller: bloc.vehicleTextController,
+                          style: const TextStyle(
+                              color: Constants.colorOnSecondary,
+                              fontFamily: Constants.cairoRegular,
+                              fontSize: 14),
+                          decoration: const InputDecoration(
+                              border: InputBorder.none,
+                              hintText: AppText.CHOOSE,
+                              suffixIcon: Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 5),
+                                child: Icon(Icons.keyboard_arrow_down_rounded,
+                                    size: 22, color: Constants.colorTextLight),
+                              ),
+                              focusedBorder: InputBorder.none,
+                              hintStyle: TextStyle(
+                                  color: Constants.colorSecondary,
+                                  fontFamily: Constants.cairoRegular,
+                                  fontSize: 13))))),
 
-          const Text(AppText.VEHICLE_PHOTO,
-              style: TextStyle(
-                  fontSize: 16,
-                  color: Constants.colorOnSecondary,
-                  fontFamily: Constants.cairoSemibold)),
-          AppTextField(
-              hint: 'Upload photo',
-              suffixIcon: GestureDetector(
-                onTap: ()=>ImagePicker().pickImage(source: ImageSource.gallery),
-                child: Container(
-                  alignment: Alignment.center,
-                  height: 50,
-                  width: 100,
-                  decoration: BoxDecoration(
-                      color: Constants.colorLightPink,
-                      borderRadius: BorderRadius.circular(15)
+              const SizedBox(height: 10),
+              const Text(AppText.VEHICLE_PLATE_NUMBER,
+                  style: TextStyle(
+                      fontSize: 16,
+                      color: Constants.colorOnSecondary,
+                      fontFamily: Constants.cairoSemibold)),
+              const AppTextField(
+                  hint: AppText.ENTER,
+                  textInputType: TextInputType.text,
+                  isError: false),
+              const SizedBox(height: 10),
+              const Text(AppText.ID_PHOTO,
+                  style: TextStyle(
+                      fontSize: 16,
+                      color: Constants.colorOnSecondary,
+                      fontFamily: Constants.cairoSemibold)),
+              AppTextField(
+                  hint: 'Upload photo',
+                  readOnly: true,
+                  suffixIcon: GestureDetector(
+                    onTap: () =>
+                        ImagePicker().pickImage(source: ImageSource.gallery),
+                    child: Container(
+                      alignment: Alignment.center,
+                      height: 50,
+                      width: 100,
+                      decoration: BoxDecoration(
+                          color: Constants.colorLightPink,
+                          borderRadius: BorderRadius.circular(15)),
+                      child: const Text(AppText.UPLOAD,
+                          style: TextStyle(
+                              fontSize: 14,
+                              color: Constants.colorPrimary,
+                              fontFamily: Constants.cairoRegular)),
+                    ),
                   ),
-
-                  child: const Text(AppText.UPLOAD,style: TextStyle(fontSize: 14,color: Constants.colorPrimary,fontFamily: Constants.cairoRegular)),
-                ),
-              ),
-              textInputType: TextInputType.text,
-              isError: false),
-          const SizedBox(height: 10),
-
-          const Text(AppText.PROVIDER_MEDICAL_CHECKUP,
-              style: TextStyle(
-                  fontSize: 16,
-                  color: Constants.colorOnSecondary,
-                  fontFamily: Constants.cairoSemibold)),
-          AppTextField(
-              hint: 'Upload photo',
-              suffixIcon: GestureDetector(
-                onTap: ()=>ImagePicker().pickImage(source: ImageSource.gallery),
-                child: Container(
-                  alignment: Alignment.center,
-                  height: 50,
-                  width: 100,
-                  decoration: BoxDecoration(
-                      color: Constants.colorLightPink,
-                      borderRadius: BorderRadius.circular(15)
+                  textInputType: TextInputType.text,
+                  isError: false),
+              const SizedBox(height: 10),
+              const Text(AppText.DRIVING_LICENSE,
+                  style: TextStyle(
+                      fontSize: 16,
+                      color: Constants.colorOnSecondary,
+                      fontFamily: Constants.cairoSemibold)),
+              AppTextField(
+                  hint: 'Upload photo',
+                  readOnly: true,
+                  suffixIcon: GestureDetector(
+                    onTap: () =>
+                        ImagePicker().pickImage(source: ImageSource.gallery),
+                    child: Container(
+                      alignment: Alignment.center,
+                      height: 50,
+                      width: 100,
+                      decoration: BoxDecoration(
+                          color: Constants.colorLightPink,
+                          borderRadius: BorderRadius.circular(15)),
+                      child: const Text(AppText.UPLOAD,
+                          style: TextStyle(
+                              fontSize: 14,
+                              color: Constants.colorPrimary,
+                              fontFamily: Constants.cairoRegular)),
+                    ),
                   ),
-
-                  child: const Text(AppText.UPLOAD,style: TextStyle(fontSize: 14,color: Constants.colorPrimary,fontFamily: Constants.cairoRegular)),
-                ),
-              ),
-              textInputType: TextInputType.text,
-              isError: false),
-          const SizedBox(height: 10),
-
-
+                  textInputType: TextInputType.text,
+                  isError: false),
+              const SizedBox(height: 10),
+              const Text(AppText.VEHICLE_PHOTO,
+                  style: TextStyle(
+                      fontSize: 16,
+                      color: Constants.colorOnSecondary,
+                      fontFamily: Constants.cairoSemibold)),
+              AppTextField(
+                  hint: 'Upload photo',
+                  readOnly: true,
+                  suffixIcon: GestureDetector(
+                    onTap: () =>
+                        ImagePicker().pickImage(source: ImageSource.gallery),
+                    child: Container(
+                      alignment: Alignment.center,
+                      height: 50,
+                      width: 100,
+                      decoration: BoxDecoration(
+                          color: Constants.colorLightPink,
+                          borderRadius: BorderRadius.circular(15)),
+                      child: const Text(AppText.UPLOAD,
+                          style: TextStyle(
+                              fontSize: 14,
+                              color: Constants.colorPrimary,
+                              fontFamily: Constants.cairoRegular)),
+                    ),
+                  ),
+                  textInputType: TextInputType.text,
+                  isError: false),
+              const SizedBox(height: 10),
+              const Text(AppText.PROVIDER_MEDICAL_CHECKUP,
+                  style: TextStyle(
+                      fontSize: 16,
+                      color: Constants.colorOnSecondary,
+                      fontFamily: Constants.cairoSemibold)),
+              AppTextField(
+                  hint: 'Upload photo',
+                  readOnly: true,
+                  suffixIcon: GestureDetector(
+                    onTap: () =>
+                        ImagePicker().pickImage(source: ImageSource.gallery),
+                    child: Container(
+                      alignment: Alignment.center,
+                      height: 50,
+                      width: 100,
+                      decoration: BoxDecoration(
+                          color: Constants.colorLightPink,
+                          borderRadius: BorderRadius.circular(15)),
+                      child: const Text(AppText.UPLOAD,
+                          style: TextStyle(
+                              fontSize: 14,
+                              color: Constants.colorPrimary,
+                              fontFamily: Constants.cairoRegular)),
+                    ),
+                  ),
+                  textInputType: TextInputType.text,
+                  isError: false),
+              const SizedBox(height: 10),
               Padding(
-                padding: const EdgeInsets.only(top: 10,bottom: 20),
+                padding: const EdgeInsets.only(top: 10, bottom: 20),
                 child: SizedBox(
                     height: 60,
                     width: size.width,
                     child: AppButton(
                         onClick: () {
                           FocusScope.of(context).unfocus();
-                          Navigator.pushNamed(context, WeWillContactYouScreen.route);
+                          Navigator.pushNamed(context, OTPScreen.route,arguments: true);
                         },
                         text: AppText.CREATE_ACCOUNT,
                         textColor: Constants.colorOnSurface,
@@ -234,32 +308,29 @@ class SignUpProfileScreen extends StatelessWidget {
                         fontSize: 16,
                         color: Constants.colorPrimary)),
               ),
-
-
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text(AppText.HAVE_AN_ACCOUNT,
-                  style: TextStyle(
-                      color: Constants.colorOnSecondary,
-                      fontSize: 14,
-                      fontFamily: Constants.cairoRegular)),
-              GestureDetector(
-                onTap: () => Navigator.pop(context),
-                child: const Text(AppText.LOGIN,
-                    style: TextStyle(
-                        color: Constants.colorPrimary,
-                        fontSize: 14,
-                        fontFamily: Constants.cairoRegular)),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(AppText.HAVE_AN_ACCOUNT,
+                      style: TextStyle(
+                          color: Constants.colorOnSecondary,
+                          fontSize: 14,
+                          fontFamily: Constants.cairoRegular)),
+                  GestureDetector(
+                    onTap: () => Navigator.pop(context),
+                    child: const Text(AppText.LOGIN,
+                        style: TextStyle(
+                            color: Constants.colorPrimary,
+                            fontSize: 14,
+                            fontFamily: Constants.cairoRegular)),
+                  ),
+                ],
               ),
+              const SizedBox(height: 20)
             ],
           ),
-
-          const SizedBox(height: 15)
-      ],
-    ),
-            ),
-          ),
-        ));
+        ),
+      ),
+    ));
   }
 }

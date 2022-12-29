@@ -73,7 +73,11 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
                       children: [
                          Stepper(
                             index: 0,
-                            onTap: (){},
+                            onTap: (){
+                              if(state==0){
+                                bloc.updateTracking();
+                              }
+                            },
                             text: AppText
                                 .THE_DRIVER_IS_HEADING_TO_THE_PICKUP_LOCATION),
                          Stepper(
@@ -81,7 +85,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
                             text: AppText
                                 .THE_DRIVER_REACED_AT_THE_TOP_PICKUP_LOCATION,
                            onTap: (){
-                              if(state<=1){
+                              if(state==1){
                                 bloc.updateTracking();
                               }}),
                         Stepper(
@@ -89,7 +93,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
                             text: AppText
                                 .THE_DRIVER_HAS_PICKED_YOUR_ORDER_AND_ON_HIS_WAY_TO_YOU,
                             onTap: (){
-                              if(state<=2){
+                              if(state==2){
                                 bloc.updateTracking();
                               }}),
                         Stepper(
@@ -97,7 +101,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
                             text: AppText
                                 .THE_DRIVER_HAS_ARRIVED_AT_THE_DELIVERY_POINT,
                             onTap: (){
-                              if(state<=3){
+                              if(state==3){
                                 bloc.updateTracking();
                               }},
                             isDotted: false)
@@ -188,7 +192,7 @@ class Stepper extends StatelessWidget {
               isDotted
                   ?  DottedLine(
                       direction: Axis.vertical,
-                      lineLength:index==0? 20:index==2?60:30,
+                      lineLength:index==2?60:30,
                       lineThickness: 2.0,
                       dashLength: 6.0,
                       dashColor: Constants.colorDotLine,
@@ -214,8 +218,6 @@ class Stepper extends StatelessWidget {
                         ? Constants.colorOnSecondary
                         : Constants.colorDotLine),
               ),
-              index==0?
-              const SizedBox():
               SizedBox(
                   width: 50,
                   height: 30,

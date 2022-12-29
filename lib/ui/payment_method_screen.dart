@@ -93,7 +93,7 @@ class PaymentMethodScreen extends StatelessWidget {
                               ..showDeleteDialogCart();
                           },
                           backgroundColor: Colors.transparent,
-                          icon: Icons.delete,
+                          icon: Icon(Icons.delete),
                           label: '',
                           padding: const EdgeInsets.only(top: 10),
                           foregroundColor: Colors.red,

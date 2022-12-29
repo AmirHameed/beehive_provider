@@ -21,9 +21,10 @@ class AppTextField extends StatelessWidget {
       required this.textInputType,
       required this.isError,
       this.controller,
-      this.onChanged, this.maxLine=1,
+      this.onChanged,
+      this.maxLine = 1,
       this.isObscure = false,
-        this.readOnly=false,
+      this.readOnly = false,
       this.suffixIcon,
       this.onSuffixClick,
       this.prefixIcon,
@@ -36,13 +37,16 @@ class AppTextField extends StatelessWidget {
         padding: const EdgeInsets.only(left: 15),
         margin: const EdgeInsets.only(bottom: 10, top: 10),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
-          border: Border.all(color: isError ? Constants.colorError : Constants.colorTextLight3),
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(
+              color:
+                  isError ? Constants.colorError : Constants.colorTextLight3),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            prefixIcon != null ? prefixIcon! : const SizedBox(),
             Expanded(
                 child: TextFormField(
                     obscureText: isObscure,
@@ -52,17 +56,21 @@ class AppTextField extends StatelessWidget {
                     maxLines: maxLine,
                     keyboardType: textInputType,
                     textInputAction: textInputAction,
-                    style: const TextStyle(color: Constants.colorOnSecondary, fontFamily: Constants.cairoRegular, fontSize: 14),
+                    style: const TextStyle(
+                        color: Constants.colorOnSecondary,
+                        fontFamily: Constants.cairoRegular,
+                        fontSize: 14),
                     decoration: InputDecoration(
                         border: InputBorder.none,
                         focusedBorder: InputBorder.none,
                         hintText: hint,
-                        hintStyle:
-                            TextStyle(color: Constants.colorSecondary, fontFamily: Constants.cairoRegular, fontSize: 13)))),
+                        hintStyle: TextStyle(
+                            color: Constants.colorTextLight,
+                            fontFamily: Constants.cairoRegular,
+                            fontSize: 13)))),
             suffixIcon != null
                 ? GestureDetector(
-                    onTap: () => onSuffixClick?.call(),
-                    child:  suffixIcon!)
+                    onTap: () => onSuffixClick?.call(), child: suffixIcon!)
                 : const SizedBox()
           ],
         ));
@@ -88,7 +96,9 @@ class OtherAppTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(color: Color(0xffE8E8E8), borderRadius: BorderRadius.all(Radius.circular(8))),
+      decoration: const BoxDecoration(
+          color: Color(0xffE8E8E8),
+          borderRadius: BorderRadius.all(Radius.circular(8))),
       child: TextField(
           textInputAction: inputAction,
           keyboardType: textInputType,
@@ -105,7 +115,9 @@ class OtherAppTextField extends StatelessWidget {
               contentPadding: const EdgeInsets.only(left: 10, right: 10),
               enabledBorder: InputBorder.none,
               hintText: hint,
-              hintStyle: TextStyle(color: const Color(0xff4A4A4A).withOpacity(0.7), fontSize: 14))),
+              hintStyle: TextStyle(
+                  color: const Color(0xff4A4A4A).withOpacity(0.7),
+                  fontSize: 14))),
     );
   }
 }

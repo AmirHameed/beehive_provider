@@ -8,7 +8,6 @@ import 'package:beehive_provider/utils/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:image_picker/image_picker.dart';
 
 class SettingScreen extends StatelessWidget {
   static const String route = 'setting_screen_route';
@@ -131,6 +130,8 @@ showChangeInformationBottomSheet(
     context: context,
     enableDrag: true,
     isDismissible: true,
+    isScrollControlled: true,
+    constraints: BoxConstraints(minHeight: size.height/3.2,maxHeight: size.height/3.2),
     backgroundColor: Colors.white,
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.only(
